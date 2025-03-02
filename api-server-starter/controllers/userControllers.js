@@ -7,10 +7,14 @@ const createUser = async (req, res) => {
     const newUser = await user.save();
     res.status(201).json(newUser);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    if (error.code === 11000) {
+      // Duplicate key error
+      res.status(400).json({ message: 'Email already exists' });
+    } else {
+      res.status(400).json({ message: error.message });
+    }
   }
 };
-
 // Get all users
 const getUsers = async (req, res) => {
   try {
