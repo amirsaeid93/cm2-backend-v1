@@ -4,7 +4,7 @@ const app = express();
 const morgan = require("morgan");
 const cors = require("cors");
 const connectDB = require("./config/db");
-const { unknownEndpoint, errorHandler } = require("./middleware/customMiddleware");
+const { unknownEndpoint, errorHandler, requestLogger } = require("./middleware/customMiddleware");
 const jobRouter = require('./routes/jobRouter');
 const userRouter = require('./routes/userRouter'); // Import the user router
 
@@ -12,6 +12,7 @@ const userRouter = require('./routes/userRouter'); // Import the user router
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
+app.use(requestLogger);
 
 connectDB();
 
